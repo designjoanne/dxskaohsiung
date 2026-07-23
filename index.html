@@ -208,4 +208,140 @@
 
     <nav class="tab-bar">
         <div class="tab-item active" onclick="switchTab('luggage', this)">
-            <i class="fa
+            <i class="fas fa-suitcase"></i>
+            <span>行李清單</span>
+        </div>
+        <div class="tab-item" onclick="switchTab('day1', this)">
+            <i class="fas fa-calendar-day"></i>
+            <span>Day 1</span>
+        </div>
+        <div class="tab-item" onclick="switchTab('day2', this)">
+            <i class="fas fa-calendar-check"></i>
+            <span>Day 2</span>
+        </div>
+    </nav>
+
+    <!-- 1. 行李清單 -->
+    <section id="luggage" class="content-section active">
+        <h2 class="day-title"><i class="fas fa-clipboard-list"></i> 行李檢查表</h2>
+        <div class="luggage-card">
+            <label class="check-item"><input type="checkbox"><span>個人身份證件、護照</span></label>
+            <label class="check-item"><input type="checkbox"><span>克拉棒、備用電池</span></label>
+            <label class="check-item"><input type="checkbox"><span>演唱會票、高鐵票</span></label>
+            <label class="check-item"><input type="checkbox"><span>化妝包：粉底液、蜜粉餅、眼影...</span></label>
+            <label class="check-item"><input type="checkbox"><span>行動電源 (充飽電)</span></label>
+            <label class="check-item"><input type="checkbox"><span>小卡、拍照用品、小手扇、小毛巾</span></label>
+            <label class="check-item"><input type="checkbox"><span>衛生紙、濕紙巾</span></label>
+            <label class="check-item"><input type="checkbox"><span>小塑膠盒 (捲手幅)、小卡盒</span></label>
+            <label class="check-item"><input type="checkbox"><span>折疊傘</span></label>
+        </div>
+    </section>
+
+    <!-- 2. Day 1 -->
+    <section id="day1" class="content-section">
+        <h2 class="day-title"><i class="fas fa-star"></i> 7/26 (日) 行程安排</h2>
+        
+        <!-- 指定藍色直條 -->
+        <article class="event-card blue-bar">
+            <span class="event-time">08:31 - 10:10</span>
+            <div class="event-title">高鐵：台北 ➔ 左營</div>
+            <span class="tag tag-booked">已預訂</span>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">10:30</span>
+            <div class="event-title">御宿商旅站前店 (寄放行李)</div>
+            <a href="https://maps.app.goo.gl/UDpbTo1d91Huerx89" class="map-btn" target="_blank">導航至飯店</a>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">12:00</span>
+            <div class="event-title">丹丹漢堡 (午餐)</div>
+            <div class="note-box">瀋陽店或華夏店</div>
+        </article>
+
+        <!-- 指定藍色直條 -->
+        <article class="event-card blue-bar">
+            <span class="event-time">13:00 - 15:30</span>
+            <div class="event-title">高雄巨蛋：拿應援、拍照</div>
+            <span class="tag tag-booked">已預訂</span>
+            <span class="tag tag-important">重要</span>
+            <div class="note-box">
+                📌 13:00 領克拉粽 2F<br>
+                📌 領取應援品<br>
+                📌 找 May 相認
+            </div>
+            <a href="https://maps.app.goo.gl/hr5bywdeh5bfgK1j8" class="map-btn" target="_blank">導航至巨蛋</a>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">16:00</span>
+            <div class="event-title">山姆森咖啡 (休息)</div>
+            <span class="tag">Cafe</span>
+            <a href="https://maps.app.goo.gl/Sya915erKpQF5JfTA" class="map-btn" target="_blank">導航至咖啡廳</a>
+        </article>
+
+        <!-- 指定藍色直條 -->
+        <article class="event-card blue-bar" style="border-width: 2px 2px 2px 6px; border-style: solid; border-color: #eee #eee #eee var(--serenity);">
+            <span class="event-time">18:00 - 21:30</span>
+            <div class="event-title">✨ DxS 演唱會</div>
+            <span class="tag tag-booked">已預訂</span>
+            <div class="note-box">好好享受這場演出！💎</div>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">22:00</span>
+            <div class="event-title">瑞豐夜市 (宵夜)</div>
+            <a href="https://maps.app.goo.gl/sZsG1atCp1XdZfPg8" class="map-btn" target="_blank">導航至夜市</a>
+        </article>
+    </section>
+
+    <!-- 3. Day 2 -->
+    <section id="day2" class="content-section">
+        <h2 class="day-title"><i class="fas fa-coffee"></i> 7/27 (一) 行程安排</h2>
+        
+        <article class="event-card">
+            <span class="event-time">09:00</span>
+            <div class="event-title">飯店早餐</div>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">11:30 - 13:00</span>
+            <div class="event-title">BOOKING 漫畫咖啡廳</div>
+            <span class="tag tag-booked">已預訂</span>
+            <a href="https://maps.app.goo.gl/GDqrKZgozSwQEw3h7" class="map-btn" target="_blank">導航至 BOOKING</a>
+        </article>
+
+        <!-- 指定藍色直條 -->
+        <article class="event-card blue-bar">
+            <span class="event-time">13:55 - 15:29</span>
+            <div class="event-title">高鐵：左營 ➔ 台北</div>
+            <span class="tag tag-booked">已預訂</span>
+        </article>
+    </section>
+
+    <script>
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        window.addEventListener('load', () => {
+            const savedData = JSON.parse(localStorage.getItem('luggageStatus') || '[]');
+            checkboxes.forEach((cb, index) => {
+                if (savedData[index]) cb.checked = true;
+            });
+        });
+        checkboxes.forEach((cb, index) => {
+            cb.addEventListener('change', () => {
+                const status = Array.from(checkboxes).map(c => c.checked);
+                localStorage.setItem('luggageStatus', JSON.stringify(status));
+            });
+        });
+    </script>
+</body>
+</html>
