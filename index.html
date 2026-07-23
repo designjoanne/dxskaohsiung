@@ -7,353 +7,325 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #37352f;
-            --text-muted: #6b7280;
-            --primary: #3b82f6; /* 交通藍 */
-            --orange: #f59e0b;  /* 咖啡/計畫橘 */
-            --green: #10b981;   /* 玩耍綠 */
-            --yellow: #eab308;  /* 飲食黃 */
-            --purple: #8b5cf6;  /* 年度紫 */
-            --border-radius: 12px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            /* SEVENTEEN 應援色 */
+            --rose-quartz: #F7CAC9;
+            --serenity: #92A8D1;
+            --bg-light: #fdfcfc;
+            --text-main: #555555;
+            --white: #ffffff;
+            --border-radius: 16px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: -apple-system, "Noto Sans TC", sans-serif;
+            background-color: var(--bg-light);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 40px;
+            padding-bottom: 80px; /* 為底部 Tab Bar 留空間 */
         }
 
-        /* Header 區域 */
-        .page-header {
-            background: white;
-            padding: 2rem 1.5rem;
+        /* 頁首 */
+        header {
+            background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--serenity) 100%);
+            padding: 2.5rem 1rem;
             text-align: center;
-            border-bottom: 1px solid #e5e7eb;
+            color: white;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: var(--shadow);
         }
 
-        .icon-circle {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
+        .header-icon { font-size: 3rem; margin-bottom: 0.5rem; display: block; }
+        h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; }
 
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .meta-info {
+        /* 導覽列 (Tab Bar) */
+        .tab-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 12px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
 
-        .badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #aaa;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+            flex: 1;
         }
 
-        .badge-date { background: #eee; color: #444; }
-        .badge-status { background: #ffedd5; color: #9a3412; }
-        .badge-year { background: #f5f3ff; color: #5b21b6; }
+        .tab-item i { font-size: 1.2rem; margin-bottom: 4px; }
+        .tab-item.active { color: var(--serenity); font-weight: bold; }
+        .tab-item.active i { transform: translateY(-2px); transition: 0.3s; }
 
-        /* 主要內容區 */
-        main {
+        /* 內容區塊控制 */
+        .content-section {
+            display: none;
             max-width: 600px;
             margin: 0 auto;
             padding: 1.5rem;
+            animation: fadeIn 0.4s ease;
         }
 
-        h2 {
-            font-size: 1.25rem;
-            margin: 1.5rem 0 1rem;
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 行李清單樣式 */
+        .luggage-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+
+        .check-item:last-child { border: none; }
+
+        input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            margin-right: 12px;
+            accent-color: var(--serenity);
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked + span {
+            text-decoration: line-through;
+            color: #ccc;
+        }
+
+        /* 行程卡片樣式 */
+        .day-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--serenity);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        /* 代辦事項卡片 */
-        .todo-section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        .todo-item:last-child { border: none; }
-        .todo-item i { margin-right: 10px; color: var(--text-muted); }
-        .todo-item.done i { color: var(--green); }
-        .todo-item.done span { text-decoration: line-through; color: var(--text-muted); }
-
-        /* 行程卡片架構 */
-        .timeline {
-            position: relative;
-            border-left: 2px solid #e5e7eb;
-            margin-left: 10px;
-            padding-left: 20px;
-        }
-
         .event-card {
-            background: var(--card-bg);
+            background: var(--white);
             border-radius: var(--border-radius);
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
             box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .event-card::before {
-            content: "";
-            position: absolute;
-            left: -27px;
-            top: 20px;
-            width: 12px;
-            height: 12px;
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
+            border-left: 5px solid var(--rose-quartz);
         }
 
         .event-time {
             font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: bold;
+            color: var(--serenity);
             display: block;
-            margin-bottom: 4px;
         }
 
-        .event-title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 8px;
-        }
-
-        .event-tags {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
+        .event-title { font-weight: 700; font-size: 1.1rem; margin: 4px 0; }
 
         .tag {
+            display: inline-block;
             font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background: #f0f0f0;
+            margin-right: 5px;
         }
 
-        .tag-transport { background: #dbeafe; color: #1e40af; }
-        .tag-food { background: #fef9c3; color: #854d0e; }
-        .tag-cafe { background: #ffedd5; color: #9a3412; }
-        .tag-play { background: #d1fae5; color: #065f46; }
-        .tag-task { background: #f3f4f6; color: #374151; }
+        .tag-booked { background: var(--serenity); color: white; }
+        .tag-important { background: var(--rose-quartz); color: white; }
 
-        .event-note {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            background: #f9fafb;
-            padding: 8px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-
-        /* 地圖按鈕 */
-        .map-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            color: var(--primary);
-            text-decoration: none;
-            padding: 8px 16px;
+        .note-box {
+            background: #f9f9f9;
+            padding: 10px;
             border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            border-left: 3px solid #eee;
+        }
+
+        .map-btn {
+            display: block;
+            text-align: center;
+            background: #fff;
+            border: 1px solid var(--serenity);
+            color: var(--serenity);
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 12px;
             font-size: 0.85rem;
             font-weight: 600;
-            width: 100%;
-            transition: all 0.2s;
         }
 
-        .map-btn:active {
-            background: #f0f7ff;
-            transform: scale(0.98);
-        }
+        .map-btn:active { background: var(--serenity); color: white; }
 
-        /* 可折疊細節 (細節功能) */
-        details {
-            margin-top: 10px;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-        summary {
-            font-size: 0.85rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            outline: none;
-        }
-
-        /* 響應式微調 */
-        @media (max-width: 480px) {
-            main { padding: 1rem; }
-            .page-title { font-size: 1.3rem; }
-        }
     </style>
 </head>
 <body>
 
-    <header class="page-header">
-        <span class="icon-circle">💎</span>
-        <h1 class="page-title">2026 DxS 高雄演唱會</h1>
-        <div class="meta-info">
-            <span class="badge badge-date"><i class="far fa-calendar-alt"></i> 2026/07/26 → 07/27</span>
-            <span class="badge badge-status">計畫中</span>
-            <span class="badge badge-year">2026</span>
-        </div>
+    <header>
+        <span class="header-icon">💎</span>
+        <h1>2026 DxS 高雄演唱會</h1>
     </header>
 
-    <main>
-        <!-- 代辦事項 -->
-        <section>
-            <h2><i class="fas fa-check-circle"></i> 出發前準備</h2>
-            <div class="todo-section">
-                <div class="todo-item done"><i class="fas fa-check-square"></i> <span>演唱會取票</span></div>
-                <div class="todo-item done"><i class="fas fa-check-square"></i> <span>高鐵訂票</span></div>
-                <div class="todo-item"><i class="far fa-square"></i> <span>高鐵取票</span></div>
-                <div class="todo-item done"><i class="fas fa-check-square"></i> <span>住宿訂房</span></div>
-                <details>
-                    <summary>查看行李與伴手禮清單</summary>
-                    <p style="padding: 10px 0; font-size: 0.9rem;">🛍️ 伴手禮規劃 / 🎒 行李清單 (已同步 Notion)</p>
-                </details>
+    <!-- Tab Bar -->
+    <nav class="tab-bar">
+        <div class="tab-item active" onclick="switchTab('luggage', this)">
+            <i class="fas fa-suitcase"></i>
+            <span>行李清單</span>
+        </div>
+        <div class="tab-item" onclick="switchTab('day1', this)">
+            <i class="fas fa-calendar-day"></i>
+            <span>Day 1</span>
+        </div>
+        <div class="tab-item" onclick="switchTab('day2', this)">
+            <i class="fas fa-calendar-check"></i>
+            <span>Day 2</span>
+        </div>
+    </nav>
+
+    <!-- 1. 行李清單區 -->
+    <section id="luggage" class="content-section active">
+        <div class="luggage-card">
+            <label class="check-item"><input type="checkbox"><span>個人身份證件、護照</span></label>
+            <label class="check-item"><input type="checkbox"><span>克拉棒、備用電池</span></label>
+            <label class="check-item"><input type="checkbox"><span>演唱會票、高鐵票</span></label>
+            <label class="check-item"><input type="checkbox"><span>化妝包：粉底、蜜粉、眼影筆等</span></label>
+            <label class="check-item"><input type="checkbox"><span>行動電源 (充飽電)</span></label>
+            <label class="check-item"><input type="checkbox"><span>小卡、拍照用品、小手扇、毛巾</span></label>
+            <label class="check-item"><input type="checkbox"><span>衛生紙、濕紙巾</span></label>
+            <label class="check-item"><input type="checkbox"><span>小塑膠盒 (捲手幅)、小卡盒</span></label>
+            <label class="check-item"><input type="checkbox"><span>折疊傘</span></label>
+        </div>
+        <p style="text-align: center; font-size: 0.8rem; color: #ccc; margin-top: 15px;">勾選狀態會自動儲存於此設備</p>
+    </section>
+
+    <!-- 2. Day 1 區 -->
+    <section id="day1" class="content-section">
+        <h2 class="day-title"><i class="fas fa-star"></i> 7/26 (日) 行程安排</h2>
+        
+        <article class="event-card">
+            <span class="event-time">08:31 - 10:10</span>
+            <div class="event-title">高鐵：台北 ➔ 左營</div>
+            <span class="tag tag-booked">已預訂</span>
+        </article>
+
+        <article class="event-card">
+            <span class="event-time">10:30</span>
+            <div class="event-title">御宿商旅站前店 (寄放行李)</div>
+            <a href="https://maps.app.goo.gl/UDpbTo1d91Huerx89" class="map-btn" target="_blank">導航至飯店</a>
+        </article>
+
+        <article class="event-card" style="border-left-color: var(--serenity);">
+            <span class="event-time">13:00 - 15:00</span>
+            <div class="event-title">高雄巨蛋：拿應援、拍照</div>
+            <span class="tag tag-booked">已預訂</span>
+            <span class="tag tag-important">重要</span>
+            <div class="note-box">
+                📌 13:00 領克拉粽 2F<br>
+                📌 領取應援品<br>
+                📌 找 May 相認
             </div>
-        </section>
+            <a href="https://maps.app.goo.gl/hr5bywdeh5bfgK1j8" class="map-btn" target="_blank">導航至巨蛋</a>
+        </article>
 
-        <!-- 行程安排 Day 1 -->
-        <section>
-            <h2><i class="fas fa-map-marker-alt"></i> Day 1 - 7/26 (日)</h2>
-            <div class="timeline">
-                
-                <article class="event-card">
-                    <time class="event-time">08:31 - 10:10</time>
-                    <div class="event-title">台北 ➔ 高雄左營 (高鐵)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-transport">交通</span>
-                        <span class="tag tag-task">已預訂</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/LasZhkTP8chVYmF29" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> 高鐵左營站導航</a>
-                </article>
+        <article class="event-card">
+            <span class="event-time">18:00 - 21:30</span>
+            <div class="event-title">✨ DxS 演唱會</div>
+            <span class="tag tag-booked">已預訂</span>
+        </article>
 
-                <article class="event-card">
-                    <time class="event-time">10:30</time>
-                    <div class="event-title">御宿商旅站前店 (寄放行李)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-task">住宿工作</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/UDpbTo1d91Huerx89" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> 飯店導航</a>
-                </article>
+        <article class="event-card">
+            <span class="event-time">22:00</span>
+            <div class="event-title">瑞豐夜市 (宵夜)</div>
+            <a href="https://maps.app.goo.gl/sZsG1atCp1XdZfPg8" class="map-btn" target="_blank">導航至夜市</a>
+        </article>
+    </section>
 
-                <article class="event-card">
-                    <time class="event-time">12:00</time>
-                    <div class="event-title">丹丹漢堡 (瀋陽/華夏店)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-food">午餐</span>
-                    </div>
-                    <div class="event-note">來南部必吃的經典組合</div>
-                </article>
+    <!-- 3. Day 2 區 -->
+    <section id="day2" class="content-section">
+        <h2 class="day-title"><i class="fas fa-coffee"></i> 7/27 (一) 行程安排</h2>
+        
+        <article class="event-card">
+            <span class="event-time">09:00</span>
+            <div class="event-title">飯店早餐</div>
+        </article>
 
-                <article class="event-card">
-                    <time class="event-time">14:00</time>
-                    <div class="event-title">高雄巨蛋 (拿應援、拍照)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-play">玩耍</span>
-                        <span class="tag tag-task" style="background:#fee2e2; color:#b91c1c;">需預訂 Zone Card</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/hr5bywdeh5bfgK1j8" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> 高雄巨蛋導航</a>
-                </article>
+        <article class="event-card">
+            <span class="event-time">11:30 - 13:00</span>
+            <div class="event-title">BOOKING 漫畫咖啡廳</div>
+            <span class="tag tag-booked">已預訂</span>
+            <a href="https://maps.app.goo.gl/GDqrKZgozSwQEw3h7" class="map-btn" target="_blank">導航至 BOOKING</a>
+        </article>
 
-                <article class="event-card">
-                    <time class="event-time">16:00</time>
-                    <div class="event-title">山姆森咖啡</div>
-                    <div class="event-tags">
-                        <span class="tag tag-cafe">Cafe</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/Sya915erKpQF5JfTA" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> 咖啡廳導航</a>
-                </article>
+        <article class="event-card">
+            <span class="event-time">13:55 - 15:29</span>
+            <div class="event-title">高鐵：左營 ➔ 台北</div>
+            <span class="tag tag-booked">已預訂</span>
+        </article>
+    </section>
 
-                <article class="event-card" style="border: 2px solid var(--purple);">
-                    <time class="event-time">18:00 - 21:30</time>
-                    <div class="event-title">✨ DxS 演唱會正式開始</div>
-                    <div class="event-tags">
-                        <span class="tag tag-play" style="background: var(--purple); color: white;">Event</span>
-                    </div>
-                    <div class="event-note">高雄巨蛋室內場地</div>
-                </article>
+    <script>
+        // Tab 切換功能
+        function switchTab(tabId, el) {
+            // 隱藏所有區塊
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            // 顯示點選區塊
+            document.getElementById(tabId).classList.add('active');
+            
+            // 更新 Tab 按鈕狀態
+            document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
 
-                <article class="event-card">
-                    <time class="event-time">22:00</time>
-                    <div class="event-title">瑞豐夜市 (宵夜時間)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-food">晚餐/宵夜</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/sZsG1atCp1XdZfPg8" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> 瑞豐夜市導航</a>
-                </article>
+            // 切換時自動捲動到頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            </div>
-        </section>
+        // 行李檢查清單自動儲存功能
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        // 載入儲存的狀態
+        window.addEventListener('load', () => {
+            const savedData = JSON.parse(localStorage.getItem('luggageStatus') || '[]');
+            checkboxes.forEach((cb, index) => {
+                if (savedData[index]) cb.checked = true;
+            });
+        });
 
-        <!-- 行程安排 Day 2 -->
-        <section>
-            <h2><i class="fas fa-map-marker-alt"></i> Day 2 - 7/27 (一)</h2>
-            <div class="timeline">
-                
-                <article class="event-card">
-                    <time class="event-time">09:00</time>
-                    <div class="event-title">飯店早餐</div>
-                    <div class="event-tags">
-                        <span class="tag tag-food">早餐</span>
-                    </div>
-                    <div class="event-note">御宿商旅站前店附屬早餐</div>
-                </article>
-
-                <article class="event-card">
-                    <time class="event-time">11:30 - 13:00</time>
-                    <div class="event-title">BOOKING 漫畫咖啡廳</div>
-                    <div class="event-tags">
-                        <span class="tag tag-cafe">Cafe</span>
-                        <span class="tag tag-task">已預訂</span>
-                    </div>
-                    <a href="https://maps.app.goo.gl/GDqrKZgozSwQEw3h7" class="map-btn" target="_blank"><i class="fas fa-location-arrow"></i> BOOKING 導航</a>
-                </article>
-
-                <article class="event-card">
-                    <time class="event-time">13:55 - 15:29</time>
-                    <div class="event-title">高雄左營 ➔ 台北 (高鐵)</div>
-                    <div class="event-tags">
-                        <span class="tag tag-transport">交通</span>
-                    </div>
-                    <div class="event-note">準備回溫暖的家</div>
-                </article>
-
-            </div>
-        </section>
-    </main>
-
+        // 監聽變動並儲存
+        checkboxes.forEach((cb, index) => {
+            cb.addEventListener('change', () => {
+                const status = Array.from(checkboxes).map(c => c.checked);
+                localStorage.setItem('luggageStatus', JSON.stringify(status));
+            });
+        });
+    </script>
 </body>
 </html>
